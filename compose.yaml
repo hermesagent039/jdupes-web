@@ -1,0 +1,13 @@
+services:
+  jdupes:
+    build: .
+    image: ${JDUPES_IMAGE:-jdupes-web:local}
+    ports:
+      - "${JDUPES_PORT:-8080}:8080"
+    volumes:
+      - "${SCAN_VOLUME:-./data}:/data/scan"
+    restart: unless-stopped
+    environment:
+      SCAN_ROOT: /data/scan
+      WEB_HOST: 0.0.0.0
+      WEB_PORT: 8080
