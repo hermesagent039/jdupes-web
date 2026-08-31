@@ -69,7 +69,10 @@ class AppState:
                 return
             # The UI confirmation is the safety gate; -N prevents jdupes from
             # opening an interactive prompt in the detached worker.
-            args = [self.jdupes_bin, "-r", "-n" if mode == "search" else "-dN", self.root]
+            args = [self.jdupes_bin, "-r"]
+            if mode == "delete":
+                args.append("-N")
+            args.append(self.root)
             with subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
                                   text=True, start_new_session=True) as proc:
                 with self.lock:
